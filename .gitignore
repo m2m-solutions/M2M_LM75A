@@ -28,6 +28,6 @@
 *.out
 *.app
 *.bak
-.vscode/
 *.suo
 *.filters
+.vscode/
