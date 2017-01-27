@@ -27,3 +27,7 @@
 *.exe
 *.out
 *.app
+*.bak
+.vscode/settings.json
+*.suo
+*.filters
