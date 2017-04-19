@@ -8,19 +8,20 @@
 // Licensed under the MIT license, see the LICENSE.txt file.
 //
 //---------------------------------------------------------------------------------------------
+// 2017-04-19 Added begin() and end() functions for Wire handling.
+// 2017-04-19 Fixed a code merge problem
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Includes
 //
-#include <Wire.h>
 #include <M2M_LM75A.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Global variables
 //
-LM75A lm75a;
+M2M_LM75A lm75a;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -28,11 +29,12 @@ LM75A lm75a;
 //
 void setup()
 {
-  Wire.begin();
+  lm75a.begin();
+  while (!Serial); // Leonardo: wait for serial monitor  
   Serial.begin(115200);
-  while (!Serial)
-    ; // Leonardo: wait for serial monitor
-  Serial.println("M2M_LM75A Arduino library basic usage");
+  Serial.println(F("M2M_LM75A - Basic usage"));
+  Serial.println(F("==========================================="));
+  Serial.println("");
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -42,30 +44,36 @@ void setup()
 void loop()
 {
   // Temperature
-  Serial.print("Temperature in Celsius: ");
+  Serial.print(F("Temperature in Celsius: "));
   Serial.print(lm75a.getTemperature());
-  Serial.println(" *C");
-  Serial.print("Temperature in Farenheit: ");
-  Serial.println(lm75a.getTemperatureInFarenheit());
-  Serial.print("Hysteris temperature: ");
-  Serial.print("Hysteris temperature: ");
-  Serial.print("Hysteris temperature: ");
-  Serial.print(" *F");
+  Serial.println(F(" *C"));
+
+  Serial.print(F("Temperature in Farenheit: "));
+  Serial.print(lm75a.getTemperatureInFarenheit());
+  Serial.println(F(" *F"));
+
+  Serial.print(F("Hysteris temperature: "));
   Serial.print(lm75a.getHysterisisTemperature());
-  Serial.println(" *C");
-  Serial.print("OS trip temperature: ");
+  Serial.println(F(" *C"));
+
+  Serial.print(F("OS trip temperature: "));
   Serial.print(lm75a.getOSTripTemperature());
-  Serial.println(" *C");
+  Serial.println(F(" *C"));
 
   // Shutdown/Wake up
-  Serial.println("Shutting down");
+  Serial.println(F("Shutting down"));
   lm75a.shutdown();
-  Serial.print("Is shutdown: ");
+
+  Serial.print(F("Is shutdown: "));
   Serial.println(lm75a.isShutdown());
   delay(5000);
-  Serial.println("Waking up");
+
+  Serial.println(F("Waking up"));
   lm75a.wakeup();
-  Serial.print("Is shutdown: ");
+  Serial.print(F("Is shutdown: "));
   Serial.println(lm75a.isShutdown());
-  delay(5000);
+  delay(1000);
+  Serial.println(F(""));  
+  Serial.println(F("==========================================="));
+  Serial.println(F(""));
 }

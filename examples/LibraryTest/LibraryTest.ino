@@ -13,7 +13,6 @@
 //
 // Includes
 //
-#include <Wire.h>
 #include <M2M_LM75A.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -39,10 +38,9 @@ DeviceMode newDeviceMode = DeviceMode::DEVICE_MODE_INTERRUPT;
 //
 void setup()
 {
-  Wire.begin();
+  lm75a.begin();
+  while (!Serial); // Leonardo: wait for serial monitor
   Serial.begin(115200);
-  while (!Serial)
-    ; // Leonardo: wait for serial monitor
   Serial.println("Running M2M_LM75A Arduino library full test");
   Serial.println("===========================================");
   Serial.println("");
@@ -137,11 +135,11 @@ void checkTemperatureResult(const char* caption, const float value)
   Serial.print(": ");
   if (fail)
   {
-	  Serial.print("LM75A_INVALID_TEMPERATURE");
+    Serial.print("LM75A_INVALID_TEMPERATURE");
   }
   else
   {
-	  Serial.print(value);
+    Serial.print(value);
   }
   Serial.print(" - ");
   Serial.println(fail ? "FAIL" : "OK");
@@ -156,14 +154,14 @@ void checkTemperatureValue(const char* caption, const float value, const float e
   Serial.print(" - ");
   if (fail)
   {
-	  testResult = false;
-	  Serial.print("FAIL (");
-	  Serial.print(expected);
-	  Serial.println(")");
+    testResult = false;
+    Serial.print("FAIL (");
+    Serial.print(expected);
+    Serial.println(")");
   }
   else
   {
-	  Serial.println("OK");
+    Serial.println("OK");
   }
 }
 
@@ -176,14 +174,14 @@ void check8BitValue(const char* caption, const uint8_t value, const uint8_t expe
   Serial.print(" - ");
   if (fail)
   {
-	  testResult = false;
-	  Serial.print("FAIL (");
-	  Serial.print(expected);
-	  Serial.println(")");
+    testResult = false;
+    Serial.print("FAIL (");
+    Serial.print(expected);
+    Serial.println(")");
   }
   else
   {
-	  Serial.println("OK");
+    Serial.println("OK");
   }
 }
 
@@ -196,14 +194,14 @@ void checkFaultQueueValue(const char* caption, const FaultQueueValue value, cons
   Serial.print(" - ");
   if (fail)
   {
-	  testResult = false;
-	  Serial.print("FAIL (");
-	  Serial.print(getFaultQueueValueString(expected));
-	  Serial.println(")");
+    testResult = false;
+    Serial.print("FAIL (");
+    Serial.print(getFaultQueueValueString(expected));
+    Serial.println(")");
   }
   else
   {
-	  Serial.println("OK");
+    Serial.println("OK");
   }  
 }
 
@@ -216,14 +214,14 @@ void checkOsPolarityValue(const char* caption, const OsPolarity value, const OsP
   Serial.print(" - ");
   if (fail)
   {
-	  testResult = false;
-	  Serial.print("FAIL (");
-	  Serial.print(getOsPolarityString(expected));
-	  Serial.println(")");
+    testResult = false;
+    Serial.print("FAIL (");
+    Serial.print(getOsPolarityString(expected));
+    Serial.println(")");
   }
   else
   {
-	  Serial.println("OK");
+    Serial.println("OK");
   }
 }
 
@@ -236,77 +234,77 @@ void checkDeviceModeValue(const char* caption, const DeviceMode value, const Dev
   Serial.print(" - ");
   if (fail)
   {
-	  testResult = false;
-	  Serial.print("FAIL (");
-	  Serial.print(getDeviceModeString(expected));
-	  Serial.println(")");
+    testResult = false;
+    Serial.print("FAIL (");
+    Serial.print(getDeviceModeString(expected));
+    Serial.println(")");
   }
   else
   {
-	  Serial.println("OK");
+    Serial.println("OK");
   }
 }
 
 void checkTrueValue(const char* caption, const bool value, const bool expected)
 {
-	bool fail = value != expected;
-	Serial.print(caption);
-	Serial.print(": ");
-	Serial.print(value ? "True" : "False");
-	Serial.print(" - ");
-	if (fail)
-	{
-		testResult = false;
-		Serial.print("FAIL (");
-		Serial.print(expected);
-		Serial.println(")");
-	}
-	else
-	{
-		Serial.println("OK");
-	}
+  bool fail = value != expected;
+  Serial.print(caption);
+  Serial.print(": ");
+  Serial.print(value ? "True" : "False");
+  Serial.print(" - ");
+  if (fail)
+  {
+    testResult = false;
+    Serial.print("FAIL (");
+    Serial.print(expected);
+    Serial.println(")");
+  }
+  else
+  {
+    Serial.println("OK");
+  }
 }
 
 const char* getFaultQueueValueString(const FaultQueueValue value)
 {
-	switch (value)
-	{
-		case FaultQueueValue::NUMBER_OF_FAULTS_1:
-			return "NUMBER_OF_FAULTS_1";
-		case FaultQueueValue::NUMBER_OF_FAULTS_2:
-			return "NUMBER_OF_FAULTS_2";
-		case FaultQueueValue::NUMBER_OF_FAULTS_4:
-			return "NUMBER_OF_FAULTS_4";
-		case FaultQueueValue::NUMBER_OF_FAULTS_6:
-			return "NUMBER_OF_FAULTS_4";
-		default:
-			return "** ILLEGAL VALUE **";
-	}
+  switch (value)
+  {
+    case FaultQueueValue::NUMBER_OF_FAULTS_1:
+      return "NUMBER_OF_FAULTS_1";
+    case FaultQueueValue::NUMBER_OF_FAULTS_2:
+      return "NUMBER_OF_FAULTS_2";
+    case FaultQueueValue::NUMBER_OF_FAULTS_4:
+      return "NUMBER_OF_FAULTS_4";
+    case FaultQueueValue::NUMBER_OF_FAULTS_6:
+      return "NUMBER_OF_FAULTS_4";
+    default:
+      return "** ILLEGAL VALUE **";
+  }
 }
 
 const char* getOsPolarityString(const OsPolarity value)
 {
-	switch (value)
-	{
-		case OsPolarity::OS_POLARITY_ACTIVEHIGH:
-			return "OS_POLARITY_ACTIVEHIGH";
-		case OsPolarity::OS_POLARITY_ACTIVELOW:
-			return "OS_POLARITY_ACTIVELOW";
-		default:
-			return "** ILLEGAL VALUE **";
-	}
+  switch (value)
+  {
+    case OsPolarity::OS_POLARITY_ACTIVEHIGH:
+      return "OS_POLARITY_ACTIVEHIGH";
+    case OsPolarity::OS_POLARITY_ACTIVELOW:
+      return "OS_POLARITY_ACTIVELOW";
+    default:
+      return "** ILLEGAL VALUE **";
+  }
 }
 
 const char* getDeviceModeString(DeviceMode value)
 {
-	switch (value)
-	{
-		case DeviceMode::DEVICE_MODE_COMPARATOR:
-			return "DEVICE_MODE_COMPARATOR";
-		case DeviceMode::DEVICE_MODE_INTERRUPT:
-			return "DEVICE_MODE_INTERRUPT";
-		default:
-			return "** ILLEGAL VALUE **";
-	}
+  switch (value)
+  {
+    case DeviceMode::DEVICE_MODE_COMPARATOR:
+      return "DEVICE_MODE_COMPARATOR";
+    case DeviceMode::DEVICE_MODE_INTERRUPT:
+      return "DEVICE_MODE_INTERRUPT";
+    default:
+      return "** ILLEGAL VALUE **";
+  }
 }
 

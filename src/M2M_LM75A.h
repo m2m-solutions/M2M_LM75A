@@ -66,6 +66,10 @@ public:
     M2M_LM75A();
     M2M_LM75A(uint8_t address);
 
+	// Startup/Teardown
+	void begin();
+	void end();
+	
 	// Power management
 	void shutdown();
 	void wakeup();
