@@ -70,7 +70,7 @@ float M2M_LM75A::getTemperature()
 	{
 		return LM75A_INVALID_TEMPERATURE;
 	}
-	return (float)result / 256.0f;
+	return float(int16_t(result)) / 256.0f;
 }
 
 float M2M_LM75A::getTemperatureInFarenheit()
@@ -89,7 +89,7 @@ float M2M_LM75A::getHysterisisTemperature()
 	{
 		return LM75A_INVALID_TEMPERATURE;
 	}
-	return (float)result / 256.0f;
+	return float(int16_t(result)) / 256.0f;
 }
 
 FaultQueueValue M2M_LM75A::getFaultQueueValue()
@@ -104,7 +104,7 @@ float M2M_LM75A::getOSTripTemperature()
 	{
 		return LM75A_INVALID_TEMPERATURE;
 	}
-	return (float)result / 256.0f;
+	return float(int16_t(result)) / 256.0f;
 }
 
 OsPolarity M2M_LM75A::getOsPolarity()
